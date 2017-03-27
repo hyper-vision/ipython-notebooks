@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from matplotlib import style
-import sklearn
 from sklearn.utils import shuffle
 
 # TODO: Fix testing
@@ -22,7 +21,8 @@ alpha = 0.01
 df = (df - df.mean()) / df.std()
 
 df.insert(0, 'ones', 1)
-df = shuffle(df) # Shuffles the dataframe
+df = shuffle(df)  # Shuffles the dataframe
+
 
 def cost_function(X, y, theta):
     sq_error = np.power(((X * theta.T) - y), 2)
@@ -31,7 +31,7 @@ def cost_function(X, y, theta):
 
 def gradient_descent(X, y, theta, iters, alpha):
     temp = np.matrix(np.zeros(theta.shape))  # Creating temp variable to store each theta
-    parameters = int(theta.ravel().shape[1])
+    parameters = int(theta.ravel().shape[1])  # Get no of columns in theta
     cost = np.zeros(iters)
     for i in range(iters):
         error = (X * theta.T) - y
@@ -45,11 +45,12 @@ def gradient_descent(X, y, theta, iters, alpha):
 
     return theta, cost
 
+
 rows = df.shape[0]
 cols = df.shape[1]  # Gets no of columns
 print cols
-X = np.matrix(df.iloc[0:rows-50, 0:cols - 1])
-y = np.matrix(df.iloc[0:rows-50, cols - 1:cols])  # Gets all rows from 4th (last) col
+X = np.matrix(df.iloc[0:rows - 50, 0:cols - 1])
+y = np.matrix(df.iloc[0:rows - 50, cols - 1:cols])  # Gets all rows from 4th (last) col
 
 theta = np.matrix(np.zeros((cols - 1), dtype=np.int))
 
@@ -73,11 +74,9 @@ plot(iters, cost)
 
 # Testing the classifier
 # Test set
-X2 = np.matrix(df.iloc[rows-50:, 0:cols - 1])
-y2 = np.matrix(df.iloc[rows-50:, cols - 1:cols])
+X2 = np.matrix(df.iloc[rows - 50:, 0:cols - 1])
+y2 = np.matrix(df.iloc[rows - 50:, cols - 1:cols])
 
 test_perf = cost_function(X2, y2, theta)
 
 print 'Test Set Performance Cost: ', test_perf
-
-
